@@ -5,6 +5,9 @@ import { check } from "express-validator";
 import { get,post,deleteUser,put } from "../controllers/user.js";
 import { emailExist, idExits, rolValidator } from "../helpers/db_validators.js";
 import { inputValidation } from "../middlewares/validateinputs.js";
+import { validateJWS } from "../middlewares/validateJWT.js";
+import {hasRole, isAdminRole} from "../middlewares/validateRole.js";
+
 export const router = Router();
 
 router.get('/',get);
@@ -15,6 +18,9 @@ router.put('/:id',[
     inputValidation
 ],put);
 router.delete('/:id',[
+    validateJWS,
+    isAdminRole,
+    hasRole('ADMIN','USER'),
     check('id','ID incorrect').isMongoId(),
     check('id').custom(idExits),
     inputValidation

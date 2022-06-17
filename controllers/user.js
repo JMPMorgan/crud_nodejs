@@ -42,7 +42,8 @@ export const put = async(req,res)=>{
 
 export const deleteUser = async (req,res)=>{
     const {id}=req.params;
+    const userAuth= req.userAuth;
 
     const usuario= await Usuario.findByIdAndUpdate(id,{status:false});
-    res.json({usuario})
+    res.json({usuario,userAuth})
 }

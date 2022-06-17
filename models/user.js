@@ -33,7 +33,8 @@ const {Schema,model}=pkg;
 
 UserSchema.methods.toJSON=function(){
     //Al momento de imprimir el usuario llama a esta funcion para extrar lo que no queramos
-    const {password,__v,...user}= this.toObject();
+    const {password,__v,_id,...user}= this.toObject();
+    user.uid=_id;
     return user;
 }
 export default model('User',UserSchema);
