@@ -2,7 +2,6 @@ import jwt from "jsonwebtoken";
 import Usuario from  '../models/user.js';
 export const validateJWS=async(req,res,next)=>{
     const token=req.header('x-token');
-    console.log(token);
     if(!token){
         return res.status(401).json({
             msg:"Token dont exits"
