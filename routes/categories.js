@@ -5,7 +5,7 @@ import { check } from "express-validator";
 import { inputValidation } from "../middlewares/validateinputs.js";
 import { validateJWS } from "../middlewares/validateJWT.js";
 
-import { createCategory } from "../controllers/categories.js";
+import { createCategory,deleteCategory,getCategories, getCategory, updateCategory} from "../controllers/categories.js";
 
 export const router= Router();
 
@@ -16,16 +16,11 @@ export const router= Router();
 
 
 //Get all categories
-router.get('/',(req,res)=>{
- console.log('Chido');
- res.json('Chido');
-});
+router.get('/',getCategories);
 
 
 //Get a single category
-router.get('/:id',(req,res)=>{
-    res.json('Una categoria');
-});
+router.get('/:id',getCategory);
 
 //insert a new category
 router.post('/',[validateJWS,
@@ -34,11 +29,7 @@ inputValidation],createCategory);
 
 
 //Update a category
-router.put('/:id',(req,res)=>{
-    res.json('Update Categoria');
-});
+router.put('/:id',updateCategory);
 
 //Delete a category ONLY ADMIN ROLE
-router.delete('/:id',(req,res)=>{
-    res.json('Puf se borro!');
-});
+router.delete('/:id',deleteCategory);
