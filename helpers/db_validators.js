@@ -1,3 +1,4 @@
+import Category from '../models/category.js';
 import Role from  '../models/role.js';
 import Usuario from  '../models/user.js';
 
@@ -24,4 +25,13 @@ export const idExits=async (id='')=>{
     if(!exits){
         throw new Error(`ID not exists`)
     }
+}
+
+export const idExitsCategories = async(id='')=>{
+    
+        const exits=await Category.findById({_id:id});
+        if(!exits){
+            throw new Error('ID Not exists');
+        }
+    
 }

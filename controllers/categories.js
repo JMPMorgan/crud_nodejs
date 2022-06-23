@@ -25,6 +25,10 @@ export const createCategory=async(req,res)=>{
     const category = new Category(data);
     await category.save();
 
+    return res.status(201).json({
+        msg:`Category created succesful`
+    });
+
 
 }
 
@@ -44,10 +48,9 @@ export const getCategories=async(req, res)=>{
 }
 
 export const getCategory=async(req,res)=>{
-    console.log(req);
     const id=req.params.id;
     if(id){
-        const categoryDB=await Category.find({_id:id}).populate('user');
+        const categoryDB=await Category.findById({_id:id}).populate('user');
         if(categoryDB){
             return res.status(200).json({
                 categoryDB
@@ -67,6 +70,12 @@ export const getCategory=async(req,res)=>{
 
 export const updateCategory=async(req,res)=>{
     const name = req.body.name.toUpperCase();
+    const categotyDB=await Category.findOne({name});
+    if(categotyDB){
+        return res.status(400).json({
+            msg:`Name Category already exits`
+        });
+    }
     const id=req.params.id;
     if(name && id){
         await Category.findByIdAndUpdate({_id:id},{name});
