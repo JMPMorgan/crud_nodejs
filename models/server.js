@@ -7,6 +7,7 @@ This works for multiples routes in multiples files
 */
 import { router  as router_user} from '../routes/user.js';
 import { router  as router_categories} from '../routes/categories.js';
+import { router as  router_product } from '../routes/product.js';
 import '../routes/auth.js';
 import { dbConnect } from '../database/config.js';
 export class Server{
@@ -25,6 +26,7 @@ export class Server{
         this.USUARIOS_PATH='/api/user';
         this.AUTH_PATH='/api/auth';
         this.CATEGORIES_PATH='/api/categories';
+        this.PRODUCT_PATH='/api/product';
         this.connectToDB();
         this.middlewares();
         this.routes();
@@ -48,7 +50,7 @@ export class Server{
         this.app.use(this.USUARIOS_PATH,router_user);
         this.app.use(this.AUTH_PATH,router_user);
         this.app.use(this.CATEGORIES_PATH,router_categories);
-  
+        this.app.use(this.PRODUCT_PATH,router_product);
     }
 
     startServer(){

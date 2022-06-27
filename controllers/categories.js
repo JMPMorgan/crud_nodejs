@@ -1,4 +1,4 @@
-import e from "express";
+
 import Category from "../models/category.js";
 
 
@@ -44,7 +44,6 @@ export const getCategories=async(req, res)=>{
     }else{
 
     }
-    console.log(categoriesDB);
 }
 
 export const getCategory=async(req,res)=>{
