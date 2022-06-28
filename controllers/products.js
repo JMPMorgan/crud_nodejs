@@ -1,4 +1,6 @@
-import Product from "../models/product";
+import Product from "../models/product.js";
+
+
 export const createProduct=async(req,res)=>{
 const {name, price,id_category,description}= req.body;
 const productDB= await Product.findOne({name});
@@ -7,12 +9,16 @@ const productDB= await Product.findOne({name});
             msg:`The Category ${name} already exits`
         });
     }
+    console.log(req.uid);
     const data={
         name,
         price,
-        id_category,
-        description
+        category:id_category,
+        description,
+        available:true,
+        user:req.uid
     }
+    console.log('Aqui');
     const product= new Product(data);
     await product.save();
     return res.status(200).json({
@@ -53,16 +59,23 @@ export const getProduct=async(req,res)=>{
 }
 
 export const updateProduct=async(req,res)=>{
-    const name= req.body.name;
+    const {name, price,id_category,description,available}= req.body;
     const productDB= await Product.findOne({name});
     if(productDB){
         return res.status(400).json({
             msg:`Product Name Already Exits`
         });
     }
+    const data={
+        name,
+        price,
+        category:id_category,
+        description,
+        available
+    }
     const id = req.params.id;
-    if(name && id){
-        await Product.findByIdAndUpdate({_id:id},{name});
+    if(data && id){
+        await Product.findByIdAndUpdate({_id:id},data);
         return res.status(200).json({
             msg:`Update Completed`
         });
